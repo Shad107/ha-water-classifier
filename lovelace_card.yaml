@@ -1,0 +1,33 @@
+# Example Lovelace card for Water Pattern Classifier
+# Copy into your dashboard "Eau" view
+
+type: entities
+title: 💧 Water Classification
+entities:
+  - entity: sensor.water_last_session_type
+    name: Type dernière session
+    icon: mdi:water-check
+  - entity: counter.water_count_wc_today
+    name: Chasses WC
+    icon: mdi:toilet
+  - entity: counter.water_count_douche_today
+    name: Douches
+    icon: mdi:shower
+  - entity: counter.water_count_bain_today
+    name: Bains
+    icon: mdi:bathtub
+  - entity: counter.water_count_machine_today
+    name: Machine à laver
+    icon: mdi:washing-machine
+  - entity: counter.water_count_lave_vaisselle_today
+    name: Lave-vaisselle
+    icon: mdi:dishwasher
+  - entity: counter.water_count_robinet_today
+    name: Robinet/Lavabo
+    icon: mdi:faucet
+  - entity: counter.water_count_arrosage_today
+    name: Arrosage
+    icon: mdi:sprinkler
+  - entity: counter.water_count_autre_today
+    name: Autre
+    icon: mdi:water-alert
