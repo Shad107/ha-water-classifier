@@ -3,6 +3,16 @@ from __future__ import annotations
 
 DOMAIN = "water_classifier"
 
+# Frontend card assets (=served via async_register_static_paths)
+URL_BASE = "/water_classifier_card_assets"
+JSMODULES = [
+    {
+        "name": "Water Classifier Card",
+        "filename": "water-classifier-card.js",
+        "version": "0.2.0",
+    },
+]
+
 # Configuration keys
 CONF_FLOW_SENSOR = "flow_sensor"
 CONF_SESSION_VOLUME_SENSOR = "session_volume_sensor"

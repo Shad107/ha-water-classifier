@@ -8,6 +8,7 @@ from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
 
 from .const import DOMAIN
+from .frontend_setup import JSModuleRegistration
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -18,6 +19,12 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up Water Pattern Classifier from a config entry."""
     hass.data.setdefault(DOMAIN, {})
     hass.data[DOMAIN][entry.entry_id] = dict(entry.data)
+
+    # Register the bundled Lovelace card (=static path + resource for storage mode)
+    if not hass.data[DOMAIN].get("_frontend_registered"):
+        registration = JSModuleRegistration(hass)
+        await registration.async_register()
+        hass.data[DOMAIN]["_frontend_registered"] = True
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 
