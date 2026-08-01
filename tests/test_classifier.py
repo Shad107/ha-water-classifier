@@ -1,23 +1,52 @@
-"""Tests for the classification cascade."""
+"""Tests for the classification cascade — imports coordinator directly."""
 from __future__ import annotations
 
+import importlib.util
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).parent.parent / "custom_components"))
+# Load const.py and coordinator.py directly without triggering __init__.py
+# (which imports homeassistant modules unavailable in a pure test env).
+BASE = Path(__file__).parent.parent / "custom_components" / "water_classifier"
 
-from water_classifier.coordinator import classify_session  # noqa: E402
-from water_classifier.const import (  # noqa: E402
-    TYPE_ARROSAGE,
-    TYPE_AUTRE,
-    TYPE_BAIN,
-    TYPE_DOUCHE,
-    TYPE_INCONNU,
-    TYPE_LAVE_VAISSELLE,
-    TYPE_MACHINE,
-    TYPE_ROBINET,
-    TYPE_WC,
-)
+
+def _load(name: str):
+    spec = importlib.util.spec_from_file_location(f"_wc_{name}", BASE / f"{name}.py")
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[f"_wc_{name}"] = module
+    spec.loader.exec_module(module)
+    return module
+
+
+_const = _load("const")
+
+# coordinator uses `from .const import ...` — provide a shim so it can resolve
+sys.modules["_wc_coordinator._const"] = _const
+
+
+def _load_coordinator():
+    """Load coordinator with patched relative-import base."""
+    src = (BASE / "coordinator.py").read_text()
+    # Replace relative imports with our loaded const module
+    src = src.replace("from .const import", "from _wc_const import")
+    sys.modules["_wc_const"] = _const
+    exec_globals: dict = {}
+    exec(compile(src, str(BASE / "coordinator.py"), "exec"), exec_globals)
+    return exec_globals
+
+
+_coord = _load_coordinator()
+classify_session = _coord["classify_session"]
+
+TYPE_WC = _const.TYPE_WC
+TYPE_DOUCHE = _const.TYPE_DOUCHE
+TYPE_BAIN = _const.TYPE_BAIN
+TYPE_MACHINE = _const.TYPE_MACHINE
+TYPE_LAVE_VAISSELLE = _const.TYPE_LAVE_VAISSELLE
+TYPE_ROBINET = _const.TYPE_ROBINET
+TYPE_ARROSAGE = _const.TYPE_ARROSAGE
+TYPE_AUTRE = _const.TYPE_AUTRE
+TYPE_INCONNU = _const.TYPE_INCONNU
 
 
 def test_wc_6l():
