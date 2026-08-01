@@ -1,0 +1,27 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Water Pattern Classifier",
+        "description": "Select the flow and Water-Monitor session sensors used for classification.",
+        "data": {
+          "title": "Name",
+          "flow_sensor": "Live flow rate sensor (L/min)",
+          "session_volume_sensor": "Session volume sensor (L)",
+          "session_duration_sensor": "Session duration sensor (s)",
+          "session_flow_sensor": "Session average flow sensor (L/min)"
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "Water Classifier is already configured."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "last_session_type": {
+        "name": "Last session type"
+      }
+    }
+  }
+}
