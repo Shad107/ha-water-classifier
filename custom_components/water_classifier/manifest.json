@@ -3,11 +3,11 @@
   "name": "Water Pattern Classifier",
   "codeowners": ["@Shad107"],
   "config_flow": true,
-  "dependencies": ["sun"],
+  "dependencies": ["http", "sun"],
   "documentation": "https://github.com/Shad107/ha-water-classifier",
   "integration_type": "service",
   "iot_class": "calculated",
   "issue_tracker": "https://github.com/Shad107/ha-water-classifier/issues",
   "requirements": [],
-  "version": "0.1.0"
+  "version": "0.2.0"
 }
