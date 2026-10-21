@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1] - 2026-10-21
+
+### Added
+- Multiple meters: each config entry now registers its own device, named after the entry title,
+  so adding the integration once per meter (e.g. city water, well water) gives distinct, readable
+  sensors that never collide. (#1)
+
 ## [0.2.0] - 2026-08-01
 
 ### Added

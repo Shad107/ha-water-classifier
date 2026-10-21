@@ -55,6 +55,10 @@ Copy `custom_components/water_classifier/` to your HA `/config/custom_components
    - `session_duration_sensor` : Water-Monitor last session duration
    - `session_flow_sensor` : Water-Monitor last session average flow
 
+> **Several meters?** Add the integration once per meter (e.g. city water, well water). Give each
+> entry its own title in the first field: each one becomes a separate device, so its sensors are
+> named after that meter and never collide.
+
 ## 📖 Data sources
 
 Thresholds are derived from :
