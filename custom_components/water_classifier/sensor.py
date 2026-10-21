@@ -8,6 +8,7 @@ from typing import Any
 from homeassistant.components.sensor import SensorEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, State, callback
+from homeassistant.helpers.device_info import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.event import async_track_state_change_event
 
@@ -58,6 +59,14 @@ class LastSessionTypeSensor(SensorEntity):
         self._data = data
         self._attr_unique_id = f"{entry.entry_id}_last_session_type"
         self._attr_name = "Last session type"
+        # One device per config entry, named after its title: two meters (e.g. city water,
+        # well water) show up as two distinct devices with readable sensors. (#1)
+        self._attr_device_info = DeviceInfo(
+            identifiers={(DOMAIN, entry.entry_id)},
+            name=entry.title,
+            manufacturer="Water Pattern Classifier",
+            model="Session classifier",
+        )
         self._attr_native_value = TYPE_INCONNU
         self._attributes: dict[str, Any] = {}
 

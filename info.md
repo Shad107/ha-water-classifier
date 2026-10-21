@@ -17,6 +17,8 @@ Complementary to [markaggar/Water-Monitor](https://github.com/markaggar/Water-Mo
 
 After install, add via **Settings → Devices & Services → + Add Integration → Water Pattern Classifier**.
 
+Several meters? Add the integration once per meter (e.g. city water, well water) and give each its own title: each one becomes a separate device with its own sensors.
+
 ## Documentation
 
 See [README](https://github.com/Shad107/ha-water-classifier).
